@@ -1,0 +1,19 @@
+{
+  "author": "Chad Smith <chad@nospam.me> (http://twitter.com/chadsmith)",
+  "name": "rawformdata",
+  "description": "Generate raw form data for posting and uploading via http or https.",
+  "keywords": ["upload", "mime", "post", "raw", "form", "formdata"],
+  "version": "1.0.0",
+  "homepage": "https://github.com/chadsmith/node-rawformdata",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chadsmith/node-rawformdata.git"
+  },
+  "engines": {
+    "node": ">= v0.4.0"
+  },
+  "main": "./rawformdata.js",
+  "dependencies": {
+  	"mime": "*"
+  }
+}

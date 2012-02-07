@@ -14,19 +14,21 @@ var RawFormData = function() {
 RawFormData.prototype = {
   addField: function(key, value) {
     this.data.push(new Buffer([
-			this.boundary,
-			'Content-Disposition: form-data; name="' + key + '";' + CRLF,
-			value + CRLF
-		].join(CRLF), 'ascii'));
+      this.boundary,
+      'Content-Disposition: form-data; name="' + key + '";' + CRLF,
+      value + CRLF
+    ].join(CRLF), 'ascii'));
+    return this;
   },
   addFile: function(name, filename, file) {
     file = path.join(__dirname, filename);
-		this.data.push(new Buffer([
-			this.boundary,
-			'Content-Disposition: form-data; name="' + name + '"; filename="' + filename + '";',
-			'Content-Type: ' + (mime.lookup(file) || 'application/octet-stream') + ';' + CRLF + CRLF
-		].join(CRLF), 'ascii'));
-		this.data.push(fs.readFileSync(file));
+    this.data.push(new Buffer([
+    this.boundary,
+      'Content-Disposition: form-data; name="' + name + '"; filename="' + filename + '";',
+      'Content-Type: ' + (mime.lookup(file) || 'application/octet-stream') + ';' + CRLF + CRLF
+    ].join(CRLF), 'ascii'));
+    this.data.push(fs.readFileSync(file));
+    return this;
   },
   getBuffer: function() {
     for(var data = [], i = 0, l = this.data.length; i < l; i++)
@@ -35,12 +37,12 @@ RawFormData.prototype = {
     return data;
   },
   getHeaders: function() {
-		for(var data = this.getBuffer(), length = i = 0, l = data.length; i < l; i++)
-			length += data[i].length;
-		return {
-		  'Content-Type': 'multipart/form-data; boundary="' + this.boundary.substr(2) + '"',
-		  'Content-Length': length
-		};
+    for(var data = this.getBuffer(), length = i = 0, l = data.length; i < l; i++)
+      length += data[i].length;
+    return {
+      'Content-Type': 'multipart/form-data; boundary="' + this.boundary.substr(2) + '"',
+      'Content-Length': length
+    };
   }
 };
 
